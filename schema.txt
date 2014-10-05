@@ -1,0 +1,13 @@
+person[200000]:{seqint},{forename},{lastname}
+mitarbeiter[100000]:{seqint},{randdate},{randdate}
+kuenstler[100000]:{seqint[add;100000]},{randintplusone[10]}
+produkt[200000]:{seqint},{lorem[50]},{randint[1000]}
+standardsortiment[100000]:{seqint},{randdouble[100;2]},{fromArr[Aluminium;Karton;Plastik;Papier]}
+kunstwerk[100000]:{seqint[add;100000]},{seqint[add;100000]},{randdouble[10000;2]}
+maschine[100000]:{seqint},{lorem[50]},{seqint},{seqint}
+lager[100000]:Lager {seqint},{randdouble[10000;2]},{seqint}
+eingelagert[100000]:{seqint},Lager {seqint},{randint[10000]}
+firma[100000]:Firma {seqint},{address},{phonenumber}
+auftrag[100000]:{seqint},Firma {seqint},{randdate},{fromArr[erledigt;versendet;empfangen;bezahlt]},{seqint}
+kunstschau[100000]:Kunstschau {seqint},{seqdate},Ort {seqint},Land {seqint}
+gezeigtbei[100000]:{seqint[add;100000]},{seqint[add;100000]},Kunstschau {seqint},{randintplusone[100]}
