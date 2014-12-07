@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database name="noticemanagement" defaultIdMethod="native">
+  <!-- Notice -->
+  <table name="notice" phpName="Notice">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="subject" type="varchar" size="100" required="true" />
+    <column name="text" type="varchar" size="255" required="true" />
+    <column name="date" type="date" required="true" />
+    <column name="owner" type="integer" required="true" />
+    <foreign-key foreignTable="person" phpName="Person" refPhpName="Notice" >
+      <reference local="owner" foreign="id" />
+    </foreign-key>
+    <column name="name" type="varchar" size="100" />
+    <foreign-key foreignTable="project" phpName="Project" refPhpName="Notice">
+      <reference local="name" foreign="name" />
+    </foreign-key>
+  </table>
+  <!-- Project -->
+  <table name="project" phpName="Project">
+    <column name="name" type="varchar" size="100" required="true" primaryKey="true" />
+    <column name="start_date" type="date" required="true" />
+    <column name="end_date" type="date" required="true" />
+    <column name="participed" type="integer" required="true" />
+    <foreign-key foreignTable="person" phpName="Person" refPhpName="Project">
+      <reference local="participed" foreign="id" />
+    </foreign-key>
+  </table>
+  <!-- Person -->
+  <table name="person" phpName="Person">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="100" required="true" />
+    <column name="discription" type="varchar" size="100" required="true" />
+  </table>
+  <!-- Todo -->
+  <table name="todo" phpName="Todo">
+    <column name="priority" type="integer" required="true" />
+    <column name="status" type="enum" valueSet="FINISHED,OPEN,WORKINPROGRESS" required="true" />
+    <column name="id" type="integer" required="true" />
+    <foreign-key foreignTable="notice" phpName="Notice" refPhpName="Todo">
+      <reference local="id" foreign="id"/>
+    </foreign-key>
+    <behavior name="delegate">
+      <parameter name="to" value="notice" />
+    </behavior>
+  </table>
+  <!-- Recipe -->
+  <table name="recipe" phpName="Recipe">
+    <column name="step" type="integer" />
+    <foreign-key foreignTable="belongsto" phpName="BelongsTo" refPhpName="Recipe">
+      <reference local="step" foreign="step"/>
+    </foreign-key>
+    <column name="id" type="integer" required="true" />
+    <foreign-key foreignTable="notice" phpName="Notice" refPhpName="Recipe">
+      <reference local="id" foreign="id"/>
+    </foreign-key>
+    <behavior name="delegate">
+      <parameter name="to" value="notice" />
+    </behavior>
+  </table>
+  <!-- belongsto -->
+  <table name="belongsto" phpName="BelongsTo">
+    <column name="step" type="integer" required="true" />
+    <foreign-key foreignTable="recipe" phpName="Recipe" refPhpName="BelongsTo">
+      <reference local="step" foreign="id"/>
+    </foreign-key>
+    <column name="id" type="integer" required="true" />
+    <foreign-key foreignTable="notice" phpName="Notice" refPhpName="BelongsTo">
+      <reference local="id" foreign="id"/>
+    </foreign-key>
+  </table>
+</database>
